@@ -7,7 +7,7 @@ Note: currently there's a number of other tools installed as well, that should b
 
 ## Build instructions
 
-1. docker build -t dask-worker:latest .
+1. docker build -t dask-scheduler:latest .
 2. Identify the < build tag > at the bottom of the stdout from the previous step
-3. docker tag < build tag > < docker username >/dask-worker:latest
-4. docker push < docker username >/dask-worker:latest
+3. docker tag < build tag > < docker username >/dask-scheduler:latest
+4. docker push < docker username >/dask-scheduler:latest
