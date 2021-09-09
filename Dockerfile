@@ -6,15 +6,9 @@
 # Authors:
 # - Paul Nilsson, paul.nilsson@cern.ch, 2021
 
-# docker build -t dask-scheduler:latest .
-# docker images
-# docker tag b93b5a6c3ab6 palnilsson/dask-scheduler:latest
-# docker push palnilsson/dask-scheduler:latest
-
 FROM continuumio/miniconda3:4.8.2
 
 MAINTAINER Paul Nilsson
-
 USER root
 
 RUN conda install --yes \
@@ -36,7 +30,6 @@ RUN conda install --yes \
     && rm -rf /opt/conda/pkgs
 
 COPY prepare.sh /usr/bin/prepare.sh
-
 RUN mkdir /opt/app
 
 # Activate the environment, and make sure it's activated:
@@ -45,4 +38,5 @@ COPY environment.yml /opt/app/.
 RUN conda env create -f /opt/app/environment.yml
 RUN activate myenv
 
+# Execute the prepare script, which starts the scheduler
 ENTRYPOINT ["tini", "-g", "--", "/usr/bin/prepare.sh"]
