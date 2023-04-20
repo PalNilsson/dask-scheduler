@@ -4,9 +4,9 @@
 # http://www.apache.org/licenses/LICENSE-2.0
 #
 # Authors:
-# - Paul Nilsson, paul.nilsson@cern.ch, 2021
+# - Paul Nilsson, paul.nilsson@cern.ch, 2023
 
-FROM continuumio/miniconda3:4.8.2
+FROM continuumio/miniconda3:22.11.1
 
 MAINTAINER Paul Nilsson
 USER root
@@ -16,12 +16,12 @@ RUN conda install --yes \
     python==3.8 \
     python-blosc \
     cytoolz \
-    dask==2021.7.2 \
+    dask==2023.3.2 \
     lz4 \
     nomkl \
-    numpy==1.21.1 \
-    pandas==1.3.0 \
-    tini==0.18.0 \
+    numpy==1.24.2 \
+    pandas==2.0.0 \
+    tini==0.19.0 \
     && conda clean -tipsy \
     && find /opt/conda/ -type f,l -name '*.a' -delete \
     && find /opt/conda/ -type f,l -name '*.pyc' -delete \
