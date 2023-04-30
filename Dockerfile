@@ -6,11 +6,12 @@
 # Authors:
 # - Paul Nilsson, paul.nilsson@cern.ch, 2023
 
-FROM continuumio/miniconda3:22.11.1
+FROM continuumio/miniconda3:latest
 
 MAINTAINER Paul Nilsson
 USER root
 
+RUN conda update conda
 RUN conda install --yes \
     -c conda-forge \
     python==3.9 \
@@ -20,7 +21,7 @@ RUN conda install --yes \
     lz4 \
     nomkl \
     numpy==1.24.3 \
-    pandas==2.0.1 \
+    pandas==1.5.3 \
     tini==0.19.0 \
     && conda clean -tipsy \
     && find /opt/conda/ -type f,l -name '*.a' -delete \
