@@ -41,5 +41,5 @@ fi
 #exec "$@"
 
 echo "starting dask scheduler"
-dask-scheduler --idle-timeout 500
+dask-scheduler --idle-timeout 900
 echo "finished dask scheduler"

@@ -13,14 +13,14 @@ USER root
 
 RUN conda install --yes \
     -c conda-forge \
-    python==3.8 \
+    python==3.9 \
     python-blosc \
     cytoolz \
     dask==2023.3.2 \
     lz4 \
     nomkl \
-    numpy==1.24.2 \
-    pandas==2.0.0 \
+    numpy==1.24.3 \
+    pandas==2.0.1 \
     tini==0.19.0 \
     && conda clean -tipsy \
     && find /opt/conda/ -type f,l -name '*.a' -delete \
