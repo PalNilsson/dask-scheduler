@@ -6,7 +6,7 @@
 # Authors:
 # - Paul Nilsson, paul.nilsson@cern.ch, 2023
 
-FROM continuumio/miniconda3:latest
+FROM continuumio/miniconda3:22.11.1
 
 # Tag for selecting the dask version
 ARG DASK_VERSION
