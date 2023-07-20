@@ -18,7 +18,7 @@ ARG DASK_VERSION
 # Tag for selecting a package to be pip installed (e.g. dask-ml[complete])
 ARG PACKAGE
 
-ARG python=3.9
+ARG python=3.10
 ARG release
 
 SHELL ["/bin/bash", "-c"]
@@ -34,6 +34,8 @@ RUN mamba install -y \
     dask=$DASK_VERSION \
     cachey \
     streamz \
+    numpy=1.24.4 \
+    tornado=6.3.2 \
     && mamba clean -tipy \
     && find /opt/conda/ -type f,l -name '*.a' -delete \
     && find /opt/conda/ -type f,l -name '*.pyc' -delete \
