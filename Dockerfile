@@ -4,7 +4,7 @@
 # http://www.apache.org/licenses/LICENSE-2.0
 #
 # Authors:
-# - Paul Nilsson, paul.nilsson@cern.ch, 2023
+# - Paul Nilsson, paul.nilsson@cern.ch, 2021-2023
 
 ARG BASE_CONTAINER=condaforge/mambaforge:latest
 FROM $BASE_CONTAINER
@@ -18,7 +18,7 @@ ARG DASK_VERSION
 # Tag for selecting a package to be pip installed (e.g. dask-ml[complete])
 ARG PACKAGE
 
-ARG python=3.10
+ARG python=3.10.6
 ARG release
 
 SHELL ["/bin/bash", "-c"]
