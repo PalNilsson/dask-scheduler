@@ -36,6 +36,7 @@ RUN mamba install -y \
     streamz \
     numpy=1.24.4 \
     tornado=6.3.2 \
+    root=6.26 \
     && mamba clean -tipy \
     && find /opt/conda/ -type f,l -name '*.a' -delete \
     && find /opt/conda/ -type f,l -name '*.pyc' -delete \
