@@ -9,7 +9,10 @@
 FROM continuumio/miniconda3:22.11.1
 
 # Tag for selecting the dask version
-ARG DASK_VERSION
+ARG DASK_VERSION 2023.4.1
+ARG PYTHON_VERSION 3.9
+
+ENV PYTHONV $PYTHON_VERSION
 
 # Tag for selecting a package to be pip installed (e.g. dask-ml[complete])
 ARG PACKAGE
@@ -20,7 +23,7 @@ USER root
 RUN conda update conda
 RUN conda install --yes \
     -c conda-forge \
-    python==3.9 \
+    python==$PYTHON_VERSION \
     python-blosc \
     cytoolz \
     dask==$DASK_VERSION \
