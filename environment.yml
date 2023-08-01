@@ -10,5 +10,5 @@ name: myenv
 channels:
   - conda-forge
 dependencies:
-  - python=$PYTHONV
+  - python=$PYTHON_VERSION
   - flask
