@@ -4,43 +4,45 @@
 # http://www.apache.org/licenses/LICENSE-2.0
 #
 # Authors:
-# - Paul Nilsson, paul.nilsson@cern.ch, 2023
+# - Paul Nilsson, paul.nilsson@cern.ch, 2021-2023
 
-FROM continuumio/miniconda3:22.11.1
-
-# Tag for selecting the dask version
-ARG DASK_VERSION 2023.4.1
-ARG PYTHON_VERSION 3.9
-
-ENV PYTHONV $PYTHON_VERSION
-
-# Tag for selecting a package to be pip installed (e.g. dask-ml[complete])
-ARG PACKAGE
+ARG BASE_CONTAINER=condaforge/mambaforge:latest
+FROM $BASE_CONTAINER
 
 MAINTAINER Paul Nilsson
 USER root
 
-RUN conda update conda
-RUN conda install --yes \
-    -c conda-forge \
-    python==$PYTHON_VERSION \
-    python-blosc \
-    cytoolz \
-    dask==$DASK_VERSION \
-    lz4 \
+# Tag for selecting the dask version
+ARG DASK_VERSION
+
+# Tag for selecting a package to be pip installed (e.g. dask-ml[complete])
+ARG PACKAGE
+
+ARG python=3.10.6
+ARG release
+
+SHELL ["/bin/bash", "-c"]
+
+ENV PATH /opt/conda/bin:$PATH
+ENV PYTHON_VERSION=${python}
+
+RUN mamba install -y \
+    "mamba>=0.27.0" \
+    python=${PYTHON_VERSION} \
     nomkl \
-    numpy==1.24.3 \
-    pandas==1.5.3 \
-    tini==0.19.0 \
-    && conda clean -tipsy \
+    cmake \
+    dask=$DASK_VERSION \
+    cachey \
+    streamz \
+    numpy=1.24.4 \
+    tornado=6.3.2 \
+    root=6.28  \
+    && mamba clean -tipy \
     && find /opt/conda/ -type f,l -name '*.a' -delete \
     && find /opt/conda/ -type f,l -name '*.pyc' -delete \
     && find /opt/conda/ -type f,l -name '*.js.map' -delete \
     && find /opt/conda/lib/python*/site-packages/bokeh/server/static -type f,l -name '*.js' -not -name '*.min.js' -delete \
     && rm -rf /opt/conda/pkgs
-
-# install optional package
-RUN if [[ -z "$PACKAGE" ]] ; then echo No additional package ; else python3 -m pip install --no-cache-dir $PACKAGE ; fi
 
 COPY prepare.sh /usr/bin/prepare.sh
 RUN mkdir /opt/app
@@ -51,5 +53,6 @@ COPY environment.yml /opt/app/.
 RUN conda env create -f /opt/app/environment.yml
 RUN activate myenv
 
-# Execute the prepare script, which starts the scheduler
+RUN chmod +x /usr/bin/prepare.sh
+
 ENTRYPOINT ["tini", "-g", "--", "/usr/bin/prepare.sh"]
